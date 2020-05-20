@@ -7,42 +7,36 @@ var teclas = {
 
 var d = document.getElementById("dibujito");
 var lienzo = d.getContext("2d");
-var x = 150;
-var y = 150;
+var x, y;
 var movimiento = 2;
 var colorcito = "blue";
+var dibujar = false;
 
-document.addEventListener("keydown", dibujarTeclado)
+document.addEventListener("mousedown", clickMouse);
+document.addEventListener("mousemove", dibujarMouse);
+document.addEventListener("mouseup", soltarClick);
 
-function dibujarTeclado(evento) {
-    switch (evento.keyCode) {
-        case teclas.LEFT:
-            dibujar_linea(colorcito, x, y, x - movimiento, y, lienzo)
-            x = x - movimiento
-            break;
+function clickMouse(clickDown) {
+    console.log(clickDown)
+    x = clickDown.clientX;
+    y = clickDown.clientY;
+    dibujar = true;
+}
 
-        case teclas.UP:
-            dibujar_linea(colorcito, x, y, x, y - movimiento, lienzo)
-            y = y - movimiento;
-            break;
-
-        case teclas.RIGHT:
-            dibujar_linea(colorcito, x, y, x + movimiento, y, lienzo)
-            x = x + movimiento;
-            break;
-
-        case teclas.DOWN:
-            dibujar_linea(colorcito, x, y, x, y + movimiento, lienzo)
-            y = y + movimiento;
-            break;
-
-
-        default:
-            break;
+function dibujarMouse(movimientoMouse) {
+    //console.log(movimientoMouse);
+    if (dibujar == true) {
+        dibujarLinea(colorcito, x, y, movimientoMouse.clientX, movimientoMouse.clientY, lienzo);
+        x = movimientoMouse.clientX;
+        y = movimientoMouse.clientY;
     }
 }
 
-function dibujar_linea(color, xinicial, yincial, xfinal, yfinal, lienzo) {
+function soltarClick(clickUp) {
+    dibujar = false;
+}
+
+function dibujarLinea(color, xinicial, yincial, xfinal, yfinal, lienzo) {
     lienzo.beginPath();
     lienzo.strokeStyle = color;
     lienzo.lineWidth = 2;
