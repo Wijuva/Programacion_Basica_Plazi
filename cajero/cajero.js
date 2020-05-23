@@ -29,8 +29,6 @@ function entregarDinero() {
     fotos = document.createElement("picture");
     resultado = document.createElement("p");
 
-    console.log(fotos, resultado);
-
     var t = document.getElementById("dinero");
     dinero = parseInt(t.value);
     for (const bi of caja) {
@@ -49,6 +47,7 @@ function entregarDinero() {
     if (dinero > 0) {
         resultado.innerHTML = "Soy un cajero que no puede darte esa cantidad de dinero";
     } else {
+        var contador = 0;
         for (const billete of dinero_entregado) {
             if (billete.cantidad != 0) {
                 fotos.innerHTML += "<br />Billetes de $" + billete.valor + "<br />";
@@ -56,7 +55,9 @@ function entregarDinero() {
                     billete.mostrar();
                     fotos.innerHTML += " ";
                 }
+                caja[contador].cantidad -= billete.cantidad;
             }
+            contador += 1;
         }
     }
     // Agregar nuevamente los resultados
