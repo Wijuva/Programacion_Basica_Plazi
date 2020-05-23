@@ -1,7 +1,9 @@
 var fotos = document.createElement("picture");
 var resultado = document.createElement("p");
+var dinero_actual = document.createElement("p");
 document.body.appendChild(fotos);
 document.body.appendChild(resultado);
+document.body.appendChild(dinero_actual);
 
 var dinero = 0;
 var div = 0;
@@ -14,6 +16,8 @@ caja.push(new Billete("Billete_10", 10, 10));
 caja.push(new Billete("Billete_5", 5, 5));
 caja.push(new Billete("Billete_2", 2, 20));
 caja.push(new Billete("Billete_1", 1, 50));
+
+mostrarDineroActual();
 
 var boton = document.getElementById("extraer");
 boton.addEventListener("click", entregarDinero);
@@ -61,6 +65,17 @@ function entregarDinero() {
         }
     }
     // Agregar nuevamente los resultados
+    mostrarDineroActual();
     document.body.appendChild(fotos);
     document.body.appendChild(resultado);
+}
+
+function mostrarDineroActual() {
+    document.body.removeChild(dinero_actual);
+    dinero_actual = document.createElement("p");
+    dinero_actual.innerHTML = "Cantidad de billetes actuales <br />"
+    for (const billete of caja) {
+        dinero_actual.innerHTML += "<strong>" + billete.valor + ":<strong> " + billete.cantidad + "<br />";
+    }
+    document.body.appendChild(dinero_actual);
 }
